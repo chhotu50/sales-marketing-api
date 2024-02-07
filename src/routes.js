@@ -1,0 +1,24 @@
+const router = require("express").Router();
+const AuthController = require("./constrollers/AuthController");
+const UserController = require("./constrollers/UserController");
+
+const validation = require("./utils/validation");
+const middleware = require("./middleware/auth");
+const adminAuth = require("./middleware/adminAuth");
+
+//user
+router
+  .route("/register")
+  .post(validation.registerValidation, AuthController.auth.register);
+router
+  .route("/user/create")
+  .post(adminAuth, validation.registerValidation, AuthController.auth.register);
+router
+  .route("/login")
+  .post(validation.loginValidation, AuthController.auth.login);
+router.route("/user/list").get(adminAuth, UserController.user.list);
+router.route("/user/:id").get(adminAuth, UserController.user.showOne);
+router.route("/user/delete/:id").delete(adminAuth, UserController.user.delete);
+router.route("/user/update/:id").put(adminAuth, UserController.user.update);
+
+module.exports = router;
