@@ -4,11 +4,11 @@ const app = express();
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const path = require("path");
-const User = require("./../src/models/User");
+const User = require("./src/models/User");
 require("dotenv").config();
-const db = require("./config/db");
+const db = require("./src/config/db");
 const fileUpload = require("express-fileupload");
-const { ROLES } = require("./config");
+const { ROLES } = require("./src/config");
 global.appRoot = path.resolve(__dirname);
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -19,7 +19,7 @@ app.use("/src/uploads", express.static(path.join(__dirname, "../src/uploads")));
 db();
 
 app.use(fileUpload());
-app.use("/api", require("./routes"));
+app.use("/api", require("./src/routes"));
 
 app.get("/", async function (req, res) {
   let user = await User.findOne({
