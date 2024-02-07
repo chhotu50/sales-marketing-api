@@ -11,7 +11,7 @@ router
   .route("/register")
   .post(validation.registerValidation, AuthController.auth.register);
 router
-  .route("/user/create")
+  .route("/user")
   .post(adminAuth, validation.registerValidation, AuthController.auth.register);
 router
   .route("/login")
