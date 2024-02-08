@@ -20,7 +20,11 @@ exports.dashboard = {
       ];
       const data = await User.aggregate(aggregatorOpts).exec();
       return res.json(
-        response({ data: data, status: true, message: "Fetch record success" })
+        response({
+          data: data[0],
+          status: true,
+          message: "Fetch record success",
+        })
       );
     } catch (error) {
       return res.json(response({ errors: error, message: error?.message }));
