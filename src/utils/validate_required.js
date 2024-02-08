@@ -7,7 +7,8 @@ module.exports.validateRequired = (req, res, next, schema) => {
   const { error, value } = schema.validate(req.body, options);
   if (error) {
     res.json({
-      messages: `Validation error: ${error.details
+      status: false,
+      message: `Validation error: ${error.details
         .map((x) => x.message)
         .join(", ")}`,
     });
