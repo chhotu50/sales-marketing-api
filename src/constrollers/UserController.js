@@ -4,6 +4,8 @@ exports.user = {
   list: async function (req, res) {
     try {
       const query = req.query;
+      const id = req.user._id;
+      query["_id"] = { $ne: id };
       const data = await User.find(query)
         .populate("created_by_user_id")
         .sort({ created_at: -1 });
