@@ -30,11 +30,32 @@ exports.user = {
   },
   update: async function (req, res) {
     try {
-      const { name, phone, linkedin, facebook, twitter, instagram, country } =
-        req.body;
+      const {
+        name,
+        phone,
+        linkedin,
+        facebook,
+        twitter,
+        instagram,
+        country,
+        plateform,
+        lead_score,
+        conversion,
+      } = req.body;
       const data = await User.findByIdAndUpdate(
         req.params.id,
-        { name, phone, linkedin, facebook, twitter, instagram, country },
+        {
+          name,
+          phone,
+          linkedin,
+          facebook,
+          twitter,
+          instagram,
+          country,
+          plateform,
+          lead_score,
+          conversion,
+        },
         {
           new: true,
         }

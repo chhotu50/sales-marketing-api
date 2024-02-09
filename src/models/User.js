@@ -20,10 +20,13 @@ const UserSchema = mongoose.Schema({
   twitter: String,
   instagram: String,
   country: String,
+  plateform: String,
+  lead_score: String,
+  conversion: String,
   created_by_user_id: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: false 
+    ref: "User",
+    required: false,
   },
   role: {
     type: Number,
