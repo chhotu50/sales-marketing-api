@@ -2,6 +2,7 @@ const Country = require("./../models/Country");
 const { response } = require("../utils/response");
 const Plateform = require("../models/Platform");
 const LeadScore = require("../models/LeadScore");
+const Conversion = require("../models/Conversion");
 exports.manage = {
   list: async function (req, res) {
     try {
@@ -96,6 +97,8 @@ const getModal = (type) => {
       return Plateform;
     case "leadscore":
       return LeadScore;
+    case "conversion":
+      return Conversion;
     default:
       return Country;
   }
