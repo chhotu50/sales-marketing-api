@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const { response } = require("../utils/response");
 const { ROLES } = require("../config");
+const { ObjectId } = require("mongodb");
 module.exports = function (req, res, next) {
   const token = req.header("token");
   if (!token) return res.json(response({ message: "Auth Error" }));
@@ -11,7 +12,9 @@ module.exports = function (req, res, next) {
       return res.json(response({ message: "Unauthorized user" }));
     }
     req.method === "POST"
-      ? (req.body["created_by_user_id"] = req.user._id)
+      ? (req.body["created_by_user_id"] = ObjectId.createFromHexString(
+          req.user._id
+        ))
       : "";
     next();
   } catch (e) {
