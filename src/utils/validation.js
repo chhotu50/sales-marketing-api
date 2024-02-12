@@ -22,32 +22,15 @@ function loginValidation(req, res, next) {
   validateRequest.validateRequired(req, res, next, schema);
 }
 
-function categoryValidation(req, res, next) {
+function titleValidation(req, res, next) {
   const schema = Joi.object({
     title: Joi.string().required(),
   });
   validateRequest.validateRequired(req, res, next, schema);
 }
 
-async function productValidation(req, res, next) {
-  const schema = await Joi.object({
-    title: Joi.string().required(),
-    category_id: Joi.string().required(),
-    address: Joi.string().required(),
-    phone: Joi.number()
-      .integer()
-      .min(1000000000)
-      .message("Invalid mobile number")
-      .max(9999999999)
-      .message("Invalid mobile number"),
-    photo: Joi.string(),
-  });
-  await validateRequest.validateRequired(req, res, next, schema);
-}
-
 module.exports = {
   registerValidation,
   loginValidation,
-  categoryValidation,
-  productValidation,
+  titleValidation,
 };

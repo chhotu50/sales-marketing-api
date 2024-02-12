@@ -1,4 +1,5 @@
 {
-    "editor.formatOnSave": true,
-    "javascript.suggestionActions.enabled": false
+  "editor.formatOnSave": true,
+  "javascript.suggestionActions.enabled": false,
+  "editor.wordWrapColumn": 120
 }

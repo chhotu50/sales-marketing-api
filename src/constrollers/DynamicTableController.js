@@ -31,7 +31,6 @@ exports.DBC = {
         })
       );
     } catch (error) {
-      console.log(error);
       return res.json(response({ errors: error, message: error?.message }));
     }
   },
@@ -151,6 +150,7 @@ exports.DBC = {
       return res.json(response({ errors: error, message: error?.message }));
     }
   },
+
   createModalData: async function (req, res, next) {
     try {
       const modal = await fetchModelSchema("testing");

@@ -3,6 +3,7 @@ const AuthController = require("./constrollers/AuthController");
 const UserController = require("./constrollers/UserController");
 const DashboardController = require("./constrollers/DashboardController");
 const DynamicTableController = require("./constrollers/DynamicTableController");
+const manage = require("./constrollers/ManageController");
 
 const validation = require("./utils/validation");
 const middleware = require("./middleware/auth");
@@ -46,5 +47,15 @@ router.route("/modal").post(adminAuth, DynamicTableController.DBC.createModal);
 router
   .route("/modal")
   .get(adminAuth, DynamicTableController.DBC.createModalData);
+
+router
+  .route("/manage")
+  .post(validation.titleValidation, adminAuth, manage.manage.store);
+router
+  .route("/manage/:id")
+  .put(validation.titleValidation, adminAuth, manage.manage.update);
+router.route("/manage").get(adminAuth, manage.manage.list);
+router.route("/manage/:id").get(adminAuth, manage.manage.showOne);
+router.route("/manage/:id").delete(adminAuth, manage.manage.delete);
 
 module.exports = router;
