@@ -1,82 +1,76 @@
 const bcrypt = require("bcryptjs");
 const mongoose = require("mongoose");
 const { ROLES } = require("../config");
-const UserSchema = mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
+const UserSchema = mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      index: true,
+      sparse: true,
+    },
+    password: String,
+    phone: String,
+    linkedin: String,
+    facebook: String,
+    twitter: String,
+    instagram: String,
+    // country: String,
+    // plateform: String,
+    // lead_score: String,
+    // conversion: String,
+    plateform: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Plateform",
+      required: false,
+    },
+    lead_score: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "LeadScore",
+      required: false,
+    },
+    conversion: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Conversion",
+      required: false,
+    },
+    country: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Country",
+      required: false,
+    },
+    created_by_user_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: false,
+    },
+    role: {
+      type: Number,
+      enum: [ROLES.ADMIN, ROLES.CLIENT],
+      default: ROLES.CLIENT,
+    },
+    status: {
+      type: Number,
+      enum: [1, 2, 3, 4],
+      default: 1,
+    },
   },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-    index: true,
-    sparse: true,
-  },
-  password: String,
-  phone: String,
-  linkedin: String,
-  facebook: String,
-  twitter: String,
-  instagram: String,
-  // country: String,
-  // plateform: String,
-  // lead_score: String,
-  // conversion: String,
-  plateform: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Plateform",
-    required: false,
-  },
-  lead_score: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "LeadScore",
-    required: false,
-  },
-  conversion: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Conversion",
-    required: false,
-  },
-  country: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Country",
-    required: false,
-  },
-  created_by_user_id: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-    required: false,
-  },
-  role: {
-    type: Number,
-    enum: [ROLES.ADMIN, ROLES.CLIENT],
-    default: ROLES.CLIENT,
-  },
-  status: {
-    type: Number,
-    enum: [1, 2, 3, 4],
-    default: 1,
-  },
-  created_at: {
-    type: Date,
-    default: Date.now(),
-  },
-  updated_at: {
-    type: Date,
-    default: Date.now(),
-  },
-  deleted_at: Date,
-});
+  { timestamps: true }
+);
 
 UserSchema.pre("save", function (next) {
   const user = this;
   const now = new Date();
-  user.updated_at = now;
+  // user.updated_at = now;
 
-  if (!user.created_at) {
-    user.created_at = now;
-  }
+  // if (!user.created_at) {
+  //   user.created_at = now;
+  // }
 
   if (!user.isModified("password")) {
     return next();

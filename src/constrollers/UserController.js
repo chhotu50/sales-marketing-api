@@ -8,7 +8,7 @@ exports.user = {
       query["_id"] = { $ne: id };
       const data = await User.find(query)
         .populate("created_by_user_id")
-        .sort({ created_at: -1 });
+        .sort({ createdAt: -1 });
       return res.json(
         response({ data: data, status: true, message: "Fetch record success" })
       );
