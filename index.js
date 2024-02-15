@@ -47,7 +47,7 @@ app.get("/", async function (req, res) {
 });
 
 function generateTwitterUrl(username) {
-  return `https://twitter.com/in/${username}`;
+  return `https://www.linkedin.com/in/${username}`;
 }
 
 app.get("/add-fake-data", async function (req, res) {
