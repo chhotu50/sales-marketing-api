@@ -78,7 +78,21 @@ exports.user = {
         response({ message: "Record delete successfully", status: true })
       );
     } catch (error) {
-      console.log(error);
+      return res.json(response({ errors: error, message: error?.message }));
+    }
+  },
+
+  multipleUserDelete: async function (req, res) {
+    try {
+      const { ids } = req.body;
+      if (!Array.isArray(ids) || ids.length === 0) {
+        return res.json(response({ message: "Invalid IDs provided" }));
+      }
+      const result = await User.deleteMany({ _id: { $in: ids } });
+      return res.json(
+        response({ message: "Record delete successfully", status: true })
+      );
+    } catch (error) {
       return res.json(response({ errors: error, message: error?.message }));
     }
   },

@@ -24,6 +24,9 @@ router.route("/user/:id").get(adminAuth, UserController.user.showOne);
 router.route("/user/:id").delete(adminAuth, UserController.user.delete);
 router.route("/user/:id").put(adminAuth, UserController.user.update);
 router
+  .route("/multipleUserDelete/")
+  .post(adminAuth, UserController.user.multipleUserDelete);
+router
   .route("/dashboard")
   .get(adminAuth, DashboardController.dashboard.rolebasedCount);
 router
