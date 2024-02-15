@@ -15,6 +15,8 @@ const fileUpload = require("express-fileupload");
 const { ROLES } = require("./src/config");
 const { response } = require("./src/utils/response");
 const Country = require("./src/models/Country");
+const Plateform = require("./src/models/Platform");
+const LeadScore = require("./src/models/LeadScore");
 global.appRoot = path.resolve(__dirname);
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -44,32 +46,49 @@ app.get("/", async function (req, res) {
   res.send({ message: "welcome Messages" });
 });
 
+function generateTwitterUrl(username) {
+  return `https://twitter.com/in/${username}`;
+}
+
 app.get("/add-fake-data", async function (req, res) {
   try {
     const query = req.query;
     let record = query.record;
     record = record ? record : 100;
     const countries = await Country.find();
+    const plateforms = await Plateform.find();
+    const leadScores = await LeadScore.find();
 
     let fakeUsers = [];
-    for (let i = 0; i < 2; i++) {
+    for (let i = 0; i < record; i++) {
       const randomCountryIndex = Math.floor(Math.random() * countries.length);
       const randomCountry = countries[randomCountryIndex];
-      fakeUsers.push({
+      const randomPlateformsIndex = Math.floor(
+        Math.random() * plateforms.length
+      );
+      const randomPlateform = plateforms[randomPlateformsIndex];
+      const randomLeadScoreIndex = Math.floor(
+        Math.random() * leadScores.length
+      );
+      const randomLeadScore = leadScores[randomLeadScoreIndex];
+      let obj = {
         name: `${faker.person.firstName()} ${faker.person.lastName()}`,
         email: faker.internet.email(),
         phone: faker.string.numeric(10),
-        linkedin: faker.internet.url(),
-        facebook: faker.internet.url("https://www.facebook.com/"),
-        twitter: faker.internet.url(),
-        instagram: faker.internet.url(),
-        plateform: new mongoose.Types.ObjectId(),
-        lead_score: new mongoose.Types.ObjectId(),
-        conversion: new mongoose.Types.ObjectId(),
-        country: randomCountry?._id ? randomCountry?._id : "",
-      });
+        linkedin: generateTwitterUrl(faker.internet.userName()),
+      };
+      if (randomCountry && randomCountry._id) {
+        obj.country = randomCountry._id;
+      }
+      if (randomPlateform && randomPlateform._id) {
+        obj.plateform = randomPlateform._id;
+      }
+      if (randomLeadScore && randomLeadScore._id) {
+        obj.lead_score = randomLeadScore._id;
+      }
+      fakeUsers.push(obj);
     }
-    console.log(fakeUsers, "fakeUsersfakeUsers");
+    await User.insertMany(fakeUsers);
     return res.json(
       response({
         data: fakeUsers,
