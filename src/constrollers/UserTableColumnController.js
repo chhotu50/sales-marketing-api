@@ -76,4 +76,35 @@ exports.userTableColumn = {
       return res.json(response({ errors: error, message: error?.message }));
     }
   },
+  updateIsVisible: async function (req, res) {
+    try {
+      const { fields } = req.body;
+      if (!Array.isArray(fields) || fields.length === 0) {
+        return res.json(response({ message: "Invalid fields provided" }));
+      }
+      const isVisibleTrue = fields.filter((e)=>e.isVisible === true).map((e)=>e_id);
+      if(isVisibleTrue && isVisibleTrue.length !==0){
+        await UserTableColumn.updateMany(
+          { _id: { $in: isVisibleTrue } },
+          { $set: { isVisible: false } },
+        )
+      }
+      const isVisibleFalse = fields.filter((e)=>e.isVisible === false).map((e)=>e_id);
+      if(isVisibleFalse && isVisibleFalse.length !==0 ){
+        await UserTableColumn.updateMany(
+          { _id: { $in: isVisibleTrue } },
+          { $set: { isVisible: true } },
+        )
+      }
+      return res.json(
+        response({
+          message: "Record update successfully",
+          status: true,
+          data: 'data',
+        })
+      );
+    } catch (error) {
+      return res.json(response({ errors: error, message: error?.message }));
+    }
+  },
 };

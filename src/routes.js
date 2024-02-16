@@ -68,6 +68,7 @@ router.route("/user-table-column/:id").put(validation.titleLabelValidation, admi
 router.route("/user-table-column").get(adminAuth, userTableColumn.userTableColumn.list);
 router.route("/user-table-column/:id").get(adminAuth, userTableColumn.userTableColumn.showOne);
 router.route("/user-table-column/:id").delete(adminAuth, userTableColumn.userTableColumn.delete);
+router.route("/user-table-column-update/").post(adminAuth, userTableColumn.userTableColumn.updateIsVisible);
 
 
 
