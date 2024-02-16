@@ -41,6 +41,8 @@ exports.user = {
         plateform,
         lead_score,
         conversion,
+        job_url,
+        date_time
       } = req.body;
       const data = await User.findByIdAndUpdate(
         req.params.id,
@@ -55,6 +57,8 @@ exports.user = {
           plateform,
           lead_score,
           conversion,
+          job_url,
+          date_time
         },
         {
           new: true,
