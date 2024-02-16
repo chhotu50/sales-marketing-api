@@ -82,14 +82,14 @@ exports.userTableColumn = {
       if (!Array.isArray(fields) || fields.length === 0) {
         return res.json(response({ message: "Invalid fields provided" }));
       }
-      const isVisibleTrue = fields.filter((e)=>e.isVisible === true).map((e)=>e_id);
+      const isVisibleTrue = fields.filter((e)=>e.isVisible === true).map((e)=>e._id);
       if(isVisibleTrue && isVisibleTrue.length !==0){
         await UserTableColumn.updateMany(
           { _id: { $in: isVisibleTrue } },
           { $set: { isVisible: false } },
         )
       }
-      const isVisibleFalse = fields.filter((e)=>e.isVisible === false).map((e)=>e_id);
+      const isVisibleFalse = fields.filter((e)=>e.isVisible === false).map((e)=>e._id);
       if(isVisibleFalse && isVisibleFalse.length !==0 ){
         await UserTableColumn.updateMany(
           { _id: { $in: isVisibleTrue } },
