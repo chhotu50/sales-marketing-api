@@ -17,6 +17,7 @@ const { response } = require("./src/utils/response");
 const Country = require("./src/models/Country");
 const Plateform = require("./src/models/Platform");
 const LeadScore = require("./src/models/LeadScore");
+const Conversion = require("./src/models/Conversion");
 global.appRoot = path.resolve(__dirname);
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -58,19 +59,20 @@ app.get("/add-fake-data", async function (req, res) {
     const countries = await Country.find();
     const plateforms = await Plateform.find();
     const leadScores = await LeadScore.find();
+    const conversions = await Conversion.find();
 
     let fakeUsers = [];
     for (let i = 0; i < record; i++) {
       const randomCountryIndex = Math.floor(Math.random() * countries.length);
       const randomCountry = countries[randomCountryIndex];
-      const randomPlateformsIndex = Math.floor(
-        Math.random() * plateforms.length
-      );
+      const randomPlateformsIndex = Math.floor( Math.random() * plateforms.length);
       const randomPlateform = plateforms[randomPlateformsIndex];
-      const randomLeadScoreIndex = Math.floor(
-        Math.random() * leadScores.length
-      );
+      const randomLeadScoreIndex = Math.floor( Math.random() * leadScores.length);
       const randomLeadScore = leadScores[randomLeadScoreIndex];
+
+      const randomConversionsIndex = Math.floor(Math.random() * conversions.length);
+      const randomconversions = conversions[randomConversionsIndex];
+
       let obj = {
         name: `${faker.person.firstName()} ${faker.person.lastName()}`,
         email: faker.internet.email(),
@@ -85,6 +87,9 @@ app.get("/add-fake-data", async function (req, res) {
       }
       if (randomLeadScore && randomLeadScore._id) {
         obj.lead_score = randomLeadScore._id;
+      }
+      if (randomconversions && randomconversions._id) {
+        obj.conversions = randomconversions._id;
       }
       fakeUsers.push(obj);
     }
