@@ -89,7 +89,7 @@ app.get("/add-fake-data", async function (req, res) {
         obj.lead_score = randomLeadScore._id;
       }
       if (randomconversions && randomconversions._id) {
-        obj.conversions = randomconversions._id;
+        obj.conversion = randomconversions._id;
       }
       fakeUsers.push(obj);
     }
