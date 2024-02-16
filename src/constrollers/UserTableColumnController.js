@@ -92,7 +92,7 @@ exports.userTableColumn = {
       const isVisibleFalse = fields.filter((e)=>e.isVisible === false).map((e)=>e._id);
       if(isVisibleFalse && isVisibleFalse.length !==0 ){
         await UserTableColumn.updateMany(
-          { _id: { $in: isVisibleTrue } },
+          { _id: { $in: isVisibleFalse } },
           { $set: { isVisible: true } },
         )
       }
