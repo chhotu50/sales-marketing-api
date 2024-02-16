@@ -20,10 +20,8 @@ const UserSchema = mongoose.Schema(
     facebook: String,
     twitter: String,
     instagram: String,
-    // country: String,
-    // plateform: String,
-    // lead_score: String,
-    // conversion: String,
+    date_time: String,
+    job_url: String,
     plateform: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Plateform",

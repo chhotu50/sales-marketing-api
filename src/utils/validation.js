@@ -18,14 +18,22 @@ function loginValidation(req, res, next) {
   const schema = Joi.object({
     email: Joi.string().email().required(),
     password: Joi.string().required(),
-  });
+  }).unknown(true);;
   validateRequest.validateRequired(req, res, next, schema);
 }
 
 function titleValidation(req, res, next) {
   const schema = Joi.object({
     title: Joi.string().required(),
-  });
+  }).unknown(true);;
+  validateRequest.validateRequired(req, res, next, schema);
+}
+
+function titleLabelValidation(req, res, next) {
+  const schema = Joi.object({
+    title: Joi.string().required(),
+    label: Joi.string().required(),
+  }).unknown(true);;
   validateRequest.validateRequired(req, res, next, schema);
 }
 
@@ -33,4 +41,5 @@ module.exports = {
   registerValidation,
   loginValidation,
   titleValidation,
+  titleLabelValidation
 };

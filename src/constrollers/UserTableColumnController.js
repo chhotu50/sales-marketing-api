@@ -1,6 +1,25 @@
 const UserTableColumn = require("./../models/UserTableColumn");
 const { response } = require("../utils/response");
-exports.user = {
+exports.userTableColumn = {
+  store: async function (req, res, next) {
+    const { title } = req.body;
+    try {
+      let data = await UserTableColumn.findOne({
+        title,
+      });
+      if (data) {
+        return res.json(response({ message: "Record Already Exists" }));
+      }
+      data = new UserTableColumn(req.body);
+      await data.save();
+      return res.json(
+        response({ status: true, data: data, message: "Record added success" })
+      );
+    } catch (error) {
+      console.log(error);
+      return res.json(response({ errors: error, message: error?.message }));
+    }
+  },
   list: async function (req, res) {
     try {
       const data = await UserTableColumn.find().sort({ created_at: -1 });

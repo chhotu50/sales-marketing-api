@@ -4,6 +4,7 @@ const UserController = require("./constrollers/UserController");
 const DashboardController = require("./constrollers/DashboardController");
 const DynamicTableController = require("./constrollers/DynamicTableController");
 const manage = require("./constrollers/ManageController");
+const userTableColumn = require("./constrollers/UserTableColumnController");
 
 const validation = require("./utils/validation");
 const middleware = require("./middleware/auth");
@@ -60,5 +61,14 @@ router
 router.route("/manage").get(adminAuth, manage.manage.list);
 router.route("/manage/:id").get(adminAuth, manage.manage.showOne);
 router.route("/manage/:id").delete(adminAuth, manage.manage.delete);
+
+//*********************************** */
+router.route("/user-table-column").post(validation.titleLabelValidation, adminAuth, userTableColumn.userTableColumn.store);
+router.route("/user-table-column/:id").put(validation.titleLabelValidation, adminAuth, userTableColumn.userTableColumn.update);
+router.route("/user-table-column").get(adminAuth, userTableColumn.userTableColumn.list);
+router.route("/user-table-column/:id").get(adminAuth, userTableColumn.userTableColumn.showOne);
+router.route("/user-table-column/:id").delete(adminAuth, userTableColumn.userTableColumn.delete);
+
+
 
 module.exports = router;
