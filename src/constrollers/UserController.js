@@ -42,7 +42,8 @@ exports.user = {
         lead_score,
         conversion,
         job_url,
-        date_time
+        date,
+        time
       } = req.body;
       const data = await User.findByIdAndUpdate(
         req.params.id,
@@ -58,7 +59,8 @@ exports.user = {
           lead_score,
           conversion,
           job_url,
-          date_time
+          date,
+          time
         },
         {
           new: true,
